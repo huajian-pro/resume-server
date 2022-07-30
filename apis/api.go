@@ -14,3 +14,7 @@ func Api(app *fiber.App) {
 func SayHi(c *fiber.Ctx) error {
 	return c.SendString("Hi!")
 }
+
+// 用户登录
+// 查询用户的简历列表
+// 查询用户的简历详情

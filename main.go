@@ -21,6 +21,11 @@ func main() {
 		TimeFormat: "2006-01-02 15:04:05", // 时间格式
 	}))
 
+	// 验活
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).SendString("👊 Yes, Iam working!")
+	})
+
 	// 注册路由组
 	apis.Api(app)
 

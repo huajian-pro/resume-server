@@ -5,11 +5,17 @@
 ./idea
 ./vscode
 
+# 忽略生成的文件
+resume
+
 # 忽略任何测试文件
 *_test.go
 
 # 忽略热重启生成的文件
 /tmp
+
+# 忽略笔记
+notes.md
 
 # 其他
 .DS_Store
