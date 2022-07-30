@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm/logger"
 	"log"
 	"os"
+	"resume-server/conf"
 	"time"
 )
 
@@ -19,11 +20,11 @@ func init() {
 
 // 定义db的连接信息
 var (
-	dbUser = "" // 数据库用户名
-	dbPass = "" // 数据库密码
-	dbAddr = "" // 数据库地址
-	dbPort = "" // 数据库端口
-	dbBase = "" // 数据库名
+	dbUser = conf.Cfg.MySQL.User // 数据库用户名
+	dbPass = conf.Cfg.MySQL.Pass // 数据库密码
+	dbAddr = conf.Cfg.MySQL.Addr // 数据库地址
+	dbPort = conf.Cfg.MySQL.Port // 数据库端口
+	dbBase = conf.Cfg.MySQL.Base // 数据库名
 )
 
 // 初始化数据库

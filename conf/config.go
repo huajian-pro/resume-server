@@ -1,9 +1,9 @@
 package conf
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
+	"log"
 )
 
 // ---------------------------------------------
@@ -48,15 +48,24 @@ type MyConfig struct {
 
 // 读取配置并绑定结构体
 func (m *MyConfig) getMyConfig() *MyConfig {
-	// 读取yaml文件到缓存
-	yamlFile, err := ioutil.ReadFile("conf/config.yaml")
-	if err != nil {
-		fmt.Println("没有找到配置文件：", err)
+	var yamlFile []byte
+	if *S {
+		// 读取生产环境的 yaml 配置文件到缓存
+		yamlFile, _ = ioutil.ReadFile("conf/prod.yaml")
+	} else {
+		// 读取开发环境的 yaml 配置文件到缓存
+		yamlFile, _ = ioutil.ReadFile("conf/config.yaml")
 	}
-	// yaml文件内容映射到结构体中
-	err = yaml.Unmarshal(yamlFile, m)
+
+	// 如果读取失败，则报错并退出
+	if yamlFile == nil {
+		log.Fatalln("没有找到配置文件，或者配置文件为空，请检查！")
+	}
+
+	// yaml文件内容映射到结构体中，失败则报错并退出
+	err := yaml.Unmarshal(yamlFile, m)
 	if err != nil {
-		fmt.Println("绑定配置参数错误：", err.Error())
+		log.Fatalln("绑定配置参数错误：", err.Error())
 	}
 	return m
 }

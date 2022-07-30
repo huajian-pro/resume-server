@@ -13,8 +13,6 @@ import (
 var S = flag.Bool("s", false, "true为正式环境，默认false测试或开发环境")
 var P = flag.Bool("p", false, "true为启用多线程，默认false")
 
-// var T = flag.Bool("t", false, "true为启动定时任务，默认false不启动")
-
 // 初始化配置
 var config = MyConfig{}
 
@@ -29,8 +27,8 @@ func init() {
 	// 设置为发布模式
 	if *S == true {
 		Cfg = config.getMyConfig().EnvProd // 赋值为生产环境配置
-		fmt.Println(fmt.Sprintf("当前为🔥生产环境🔥 定时任务启动状态:%v", false))
+		fmt.Println("各部门注意 -> 🔥生产环境🔥 <- 已启动")
 	} else {
-		fmt.Println(fmt.Sprintf("当前为🌲开发环境🌲 定时任务启动状态:%v", false))
+		fmt.Println("各部门注意 -> 🌲开发环境🌲 <- 已启动")
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"resume-server/conf"
 )
 
 // SetName 是 mongo 集合句柄（支持多个句柄）
@@ -12,9 +13,9 @@ var SetName *mongo.Collection // 句柄
 
 // mongo 的连接信息
 var (
-	Addr = ""      // 地址
-	Port = "27017" // 端口
-	Base = ""      // 库名
+	Addr = conf.Cfg.Mongo.Addr // 地址
+	Port = conf.Cfg.Mongo.Port // 端口
+	Base = conf.Cfg.Mongo.Base // 库名
 )
 
 // 初始化mongo链接，集合句柄
