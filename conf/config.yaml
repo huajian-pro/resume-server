@@ -4,18 +4,15 @@
 # 运行端口配置
 port: ":3000"
 
-# 全局前缀
-globalPrefix: "/api/v1"
-
 # redis配置
 redis:
-  addr: "redis"
+  addr: "localhost"
   port: "6379"
   auth: "redis12345"
 
 # mongo配置
 mongo:
-  addr: "mongo"
+  addr: "localhost"
   port: "27017"
   base: "resume"
 

@@ -2,39 +2,27 @@ package apis
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"resume-server/conf"
-	"resume-server/handlers"
+	"resume-server/apis/user_api"
 )
 
 // Api 设置路由
+// 代码便是文档，命名就是路由
 func Api(app *fiber.App) {
-	baseRoutes := app.Group(conf.Cfg.GlobalPrefix) // v1 路由组，使用该路由组时，前面需加上 /api/v1
-	// 基础的中间件
-	//baseRoutes.Use()
+	v1 := app.Group("v1") // v1 路由组，使用该路由组时，前面需加上 /v1
+	// v1.Use()  // 基础的中间件
 
-	publicRoutes := baseRoutes.Group("")
-	// 公共路由的中间件
-	//publicRoutes.Use()
-	{
-		// hello
-		publicRoutes.Get("/hello", helloHandler.SayHello) // 访问：/api/v1/hello
-		publicRoutes.Get("/hi", helloHandler.SayHi)
-	}
+	// 用户模块
+	user := v1.Group("user")
+	// user.Use() // 公共路由的中间件
+	user.Get("/hello", user_api.SayHello) // 访问：/v1/user/hello
+	user.Get("/hi", user_api.SayHi)
 
-	privateRoutes := baseRoutes.Group("")
-	// 私有路由的中间件
-	//privateRoutes.Use()
-	{
-		privateRoutes.Get("/test", func(ctx *fiber.Ctx) error {
-			return ctx.SendString("private")
-		})
-	}
+	// 简历模块
+	resume := v1.Group("resume")
+	// resume.Use() // 公共路由的中间件
+	resume.Get("/hello", user_api.SayHello) // 访问：/v1/resume/hello
+	resume.Get("/hi", user_api.SayHi)
 }
-
-// 在这里注册一下handler，方便读取
-var (
-	helloHandler = handlers.GroupApp.Hello
-)
 
 // todo List
 // 用户注册（邮箱+验证+设置密码；异步发送验证码）
