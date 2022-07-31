@@ -4,6 +4,9 @@
 # 运行端口配置
 port: ":3000"
 
+# 全局前缀
+globalPrefix: "/api/v1"
+
 # redis配置
 redis:
   addr: "redis"

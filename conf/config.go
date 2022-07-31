@@ -12,8 +12,9 @@ import (
 
 // MyConfig 配置文件结构体
 type MyConfig struct {
-	Port  string `yaml:"port"` // 端口配置
-	Redis struct {
+	Port         string `yaml:"port"`         // 端口配置
+	GlobalPrefix string `yaml:"globalPrefix"` // 全局前缀
+	Redis        struct {
 		Addr string `yaml:"addr"` // 地址
 		Port string `yaml:"port"` // 端口
 		Auth string `yaml:"auth"` // 密码

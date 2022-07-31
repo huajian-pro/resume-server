@@ -2,27 +2,39 @@ package apis
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"resume-server/database/model"
+	"resume-server/conf"
+	"resume-server/handlers"
 )
 
 // Api 设置路由
 func Api(app *fiber.App) {
-	v1 := app.Group("/v1")   // v1 路由组，使用该路由组时，前面需加上 /v1
-	v1.Get("/hi", SayHi)     // 使用 /v1/hi 可访问
-	app.Get("/hello", SayHi) // 使用 /hello 可访问
+	baseRoutes := app.Group(conf.Cfg.GlobalPrefix) // v1 路由组，使用该路由组时，前面需加上 /api/v1
+	// 基础的中间件
+	//baseRoutes.Use()
+
+	publicRoutes := baseRoutes.Group("")
+	// 公共路由的中间件
+	//publicRoutes.Use()
+	{
+		// hello
+		publicRoutes.Get("/hello", helloHandler.SayHello) // 访问：/api/v1/hello
+		publicRoutes.Get("/hi", helloHandler.SayHi)
+	}
+
+	privateRoutes := baseRoutes.Group("")
+	// 私有路由的中间件
+	//privateRoutes.Use()
+	{
+		privateRoutes.Get("/test", func(ctx *fiber.Ctx) error {
+			return ctx.SendString("private")
+		})
+	}
 }
 
-func SayHi(c *fiber.Ctx) error {
-	var u = model.User{}
-	u.NickName = "admin"
-	u.Password = "123456"
-	u.Email = "admin@163.com"
-	result, err := u.CreateUser()
-	if err != nil {
-		return c.SendString(err.Error())
-	}
-	return c.SendString("Hi!" + result.InsertedID.(string))
-}
+// 在这里注册一下handler，方便读取
+var (
+	helloHandler = handlers.GroupApp.Hello
+)
 
 // todo List
 // 用户注册（邮箱+验证+设置密码；异步发送验证码）
