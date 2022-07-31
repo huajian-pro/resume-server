@@ -1,41 +1,18 @@
 # 配置文件
 
 # ---------------------------------------------
-# 开发环境、测试环境
-env_test:
-  # 运行端口配置
-  port: ":3000"
+# 运行端口配置
+port: ":3000"
 
-  # mysql配置
-  mysql:
-    addr: ""
-    port: ""
-    user: ""
-    pass: ""
-    base: ""
+# redis配置
+redis:
+  addr: "redis"
+  port: "6379"
+  auth: "redis12345"
 
-  # mongo配置
-  mongo:
-    addr: ""
-    port: ""
-    base: ""
+# mongo配置
+mongo:
+  addr: "mongo"
+  port: "27017"
+  base: "resume"
 
-# ---------------------------------------------
-# 生产环境
-env_prod:
-  # 运行端口配置
-  port: ":3000"
-
-  # mysql配置
-  mysql:
-    addr: ""
-    port: ""
-    user: ""
-    pass: ""
-    base: ""
-
-  # mongo配置
-  mongo:
-    addr: ""
-    port: ""
-    base: ""

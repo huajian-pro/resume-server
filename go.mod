@@ -4,21 +4,22 @@ go 1.18
 
 require (
 	github.com/gofiber/fiber/v2 v2.35.0
+	github.com/gomodule/redigo v1.8.9
+	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
+	github.com/nilorg/sdk v0.0.0-20220617065147-3001fb840741
+	github.com/tidwall/gjson v1.14.1
 	go.mongodb.org/mongo-driver v1.10.0
 	gopkg.in/yaml.v3 v3.0.1
-	gorm.io/driver/mysql v1.3.5
-	gorm.io/gorm v1.23.8
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.38.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect

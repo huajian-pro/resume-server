@@ -1,10 +1,15 @@
 # @name GET请求
-GET http://localhost:300/?name=jack&pass=啥密码
+GET http://localhost:3000/v1/hi
+Accept: application/json
+###
+
+# @name GET请求
+GET http://localhost:3000/?name=jack&pass=啥密码
 Accept: application/json
 ###
 
 # @name POST请求
-POST http://localhost:300/
+POST http://localhost:3000/
 Content-Type: application/json
 
 {}

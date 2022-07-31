@@ -1,17 +1,18 @@
-# 创建
-FROM alpine:3.6
+FROM golang:1.18
 
 # 工作目录
 WORKDIR /app
 
 # 拷贝文件
-COPY resume-lin .
+COPY . .
 
-# 导出端口
+# 环境和依赖
+RUN go env -w GOPROXY="https://goproxy.cn,direct" \
+    && go mod tidy \
+    && go build -o /app/resume
+
+# 端口
 EXPOSE 3000
 
-# 执行命令
-RUN chmod +x ./resume-lin
-
 # 启动
-CMD ["./resume"]
+CMD ["make", "run-prod"]

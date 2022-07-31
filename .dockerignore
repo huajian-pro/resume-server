@@ -1,0 +1,20 @@
+# 构建忽略
+# ---------------------------------------------
+# 忽略idea的文件夹
+.idea
+.vscode
+
+# 忽略git文件夹
+.git
+
+# 忽略生成的文件
+tmp
+mongo-data
+redis-data
+/logs/resume_log.out
+
+# 其他
+.http
+.DS_Store
+.gitignore
+notes.md

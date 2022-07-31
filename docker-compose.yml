@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    links:
+      - redis
+      - mongo
+    networks:
+      - resume-net
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    command:
+      --requirepass redis12345
+    restart: on-failure
+    networks:
+      - resume-net
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data
+    restart: on-failure
+    networks:
+      - resume-net
+
+networks:
+  resume-net:
+    external: true
+
+# 创建网段：docker network create resume-net
+
+# 启动 compose: docker-compose up -d
+# 关闭 compose: docker-compose down
+# 查看运行的容器: docker-compose ps
+# 查看容器的日志: docker-compose logs
+# 查看容器的网络: docker-compose network inspect <name>
+

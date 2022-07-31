@@ -2,23 +2,25 @@
 # 默认忽略的文件
 # ---------------------------------------------
 # 忽略ide的文件夹
-./idea
-./vscode
+.idea
+.vscode
 
 # 忽略生成的文件
+redis-data
+mongo-data
+/tmp
 resume
 
 # 忽略配置文件
-pord.yaml
+prod.yaml
 
 # 忽略任何测试文件
 *_test.go
-
-# 忽略热重启生成的文件
-/tmp
 
 # 忽略笔记
 notes.md
 
 # 其他
 .DS_Store
+/conf/prod.yaml
+/logs/resume_log.out
