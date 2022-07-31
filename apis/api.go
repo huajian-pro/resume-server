@@ -2,7 +2,7 @@ package apis
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"resume-server/apis/user_api"
+	"resume-server/apis/userApi"
 )
 
 // Api 设置路由
@@ -14,14 +14,14 @@ func Api(app *fiber.App) {
 	// 用户模块
 	user := v1.Group("user")
 	// user.Use() // 公共路由的中间件
-	user.Get("/hello", user_api.SayHello) // 访问：/v1/user/hello
-	user.Get("/hi", user_api.SayHi)
+	user.Get("/hello", userApi.SayHello) // 访问：/v1/user/hello
+	user.Get("/hi", userApi.SayHi)
 
 	// 简历模块
 	resume := v1.Group("resume")
 	// resume.Use() // 公共路由的中间件
-	resume.Get("/hello", user_api.SayHello) // 访问：/v1/resume/hello
-	resume.Get("/hi", user_api.SayHi)
+	resume.Get("/hello", userApi.SayHello) // 访问：/v1/resume/hello
+	resume.Get("/hi", userApi.SayHi)
 }
 
 // todo List

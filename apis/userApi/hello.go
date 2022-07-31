@@ -1,4 +1,4 @@
-package user_api
+package userApi
 
 import (
 	"github.com/gofiber/fiber/v2"
