@@ -16,3 +16,8 @@ mongo:
   port: "27017"
   base: "resume"
 
+email:
+  host: "smtp.163.com"
+  port: "25"
+  user: ""
+  pass: ""

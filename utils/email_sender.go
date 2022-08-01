@@ -3,6 +3,7 @@ package utils
 import (
 	"github.com/jordan-wright/email"
 	"net/smtp"
+	"resume-server/conf"
 	"sync"
 )
 
@@ -24,13 +25,14 @@ func newEmailSender(from, subject, sendBody string) *emailSender {
 	}
 }
 
-var once sync.Once
-var sender *emailSender
+var once sync.Once             // 一次性锁，防止多个 goroutine 同时调用
+var sender *emailSender        // 单例句柄
+var emailConf = conf.Cfg.Email // email 配置
 
 // Email 获取单例句柄
 func Email(subject, sendBody string) *emailSender {
 	once.Do(func() {
-		sender = newEmailSender("如果我是dj <xxx@126.com>", subject, sendBody)
+		sender = newEmailSender("化简 <"+emailConf.User+">", subject, sendBody)
 	})
 	return sender
 }
@@ -42,8 +44,8 @@ func (sender *emailSender) Send(toSomebody []string) (ok bool) {
 	sender.Mail.Subject = sender.Subject       // 主题
 	sender.Mail.Text = []byte(sender.SendBody) // 文本内容
 	err := sender.Mail.Send(
-		"smtp.126.com:25",
-		smtp.PlainAuth("", "xxx@126.com", "yyy", "smtp.126.com"),
+		emailConf.Host, // 邮件服务器地址
+		smtp.PlainAuth("", emailConf.User, emailConf.Pass, emailConf.Host),
 	)
 	if err != nil {
 		return false // 发送失败
