@@ -2,9 +2,9 @@ package cons
 
 // ResumeData 简历内容结构体
 type ResumeData struct {
-	ID    string `json:"ID"`
-	NAME  string `json:"NAME"`
-	TITLE string `json:"TITLE"`
+	ID    string `json:"ID"`    // 模版ID
+	NAME  string `json:"NAME"`  // 模版名称
+	TITLE string `json:"TITLE"` // 模版标题
 	LIST  []struct {
 		Id       string `json:"id"`
 		Iconfont string `json:"iconfont"`
@@ -92,17 +92,17 @@ type ResumeData struct {
 			WorksIntroduce string `json:"worksIntroduce,omitempty"`
 		} `json:"LIST,omitempty"`
 		Content string `json:"content,omitempty"`
-	} `json:"LIST"`
+	} `json:"LIST"` // 数据列表
 	GlobalStyle struct {
-		ThemeColor          string `json:"themeColor"`
-		FirstTitleFontSize  string `json:"firstTitleFontSize"`
-		SecondTitleFontSize string `json:"secondTitleFontSize"`
-		TextFontSize        string `json:"textFontSize"`
-		SecondTitleColor    string `json:"secondTitleColor"`
-		TextFontColor       string `json:"textFontColor"`
-		SecondTitleWeight   int    `json:"secondTitleWeight"`
-		TextFontWeight      int    `json:"textFontWeight"`
-		ModelMarginTop      string `json:"modelMarginTop"`
-		ModelMarginBottom   string `json:"modelMarginBottom"`
-	} `json:"GLOBAL_STYLE"`
+		ThemeColor          string `json:"themeColor"`          // 主题颜色
+		FirstTitleFontSize  string `json:"firstTitleFontSize"`  // 导航栏标题字体大小
+		SecondTitleFontSize string `json:"secondTitleFontSize"` // 字体大小
+		TextFontSize        string `json:"textFontSize"`        // 字体大小
+		SecondTitleColor    string `json:"secondTitleColor"`    // 字体颜色
+		TextFontColor       string `json:"textFontColor"`       // 文字颜色
+		SecondTitleWeight   int    `json:"secondTitleWeight"`   // 字体粗细
+		TextFontWeight      int    `json:"textFontWeight"`      // 文字字体粗细
+		ModelMarginTop      string `json:"modelMarginTop"`      // 	模块距离顶部距离
+		ModelMarginBottom   string `json:"modelMarginBottom"`   // 模块边距
+	} `json:"GLOBAL_STYLE"` // 全局样式
 }

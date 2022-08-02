@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"github.com/jordan-wright/email"
 	"net/smtp"
 	"resume-server/conf"
@@ -44,7 +45,7 @@ func (sender *emailSender) Send(toSomebody []string) (ok bool) {
 	sender.Mail.Subject = sender.Subject       // 主题
 	sender.Mail.Text = []byte(sender.SendBody) // 文本内容
 	err := sender.Mail.Send(
-		emailConf.Host, // 邮件服务器地址
+		fmt.Sprintf("%s:%s", emailConf.Host, emailConf.Port), // 邮件服务器地址
 		smtp.PlainAuth("", emailConf.User, emailConf.Pass, emailConf.Host),
 	)
 	if err != nil {
