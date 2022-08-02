@@ -32,6 +32,6 @@ POST http://localhost:3000/v1/user/authCode
 Content-Type: application/json
 
 {
-  "email": "812262519@qq.com"
+  "email": "lewinloo0320@gmail.com"
 }
 ###

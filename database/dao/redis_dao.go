@@ -114,7 +114,7 @@ func (r *rds) HashSetRedisKey(field, value interface{}, tin int) {
 	if err != nil {
 		fmt.Println("向redis存hash值失败: ", err)
 	} else {
-		fmt.Printf("向redis存hash值成功: %v key: %v field: %v\n", reply, r.key, field)
+		fmt.Printf("向redis存hash值成功: %v key: %v field: %v\n", reply, field, value)
 	}
 	return
 }
