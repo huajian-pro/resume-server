@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"github.com/jordan-wright/email"
 	"net/smtp"
 	"resume-server/conf"
@@ -43,10 +44,13 @@ func (sender *emailSender) Send(toSomebody []string) (ok bool) {
 	sender.Mail.To = toSomebody                // 收件人
 	sender.Mail.Subject = sender.Subject       // 主题
 	sender.Mail.Text = []byte(sender.SendBody) // 文本内容
+	host := fmt.Sprintf("%s:%s", emailConf.Host, emailConf.Port)
+	auth := smtp.PlainAuth("", emailConf.User, emailConf.Pass, emailConf.Host)
 	err := sender.Mail.Send(
-		emailConf.Host, // 邮件服务器地址
-		smtp.PlainAuth("", emailConf.User, emailConf.Pass, emailConf.Host),
+		host, // 邮件服务器地址
+		auth,
 	)
+	fmt.Println(err.Error())
 	if err != nil {
 		return false // 发送失败
 	}

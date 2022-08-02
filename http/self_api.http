@@ -14,3 +14,24 @@ Content-Type: application/json
 
 {}
 ###
+
+# @name 用户注册
+POST http://localhost:3000/v1/user/register
+Content-Type: application/json
+
+{
+  "username": "lewin",
+  "email": "lewinloo0320@gmail.com",
+  "password": "123456",
+  "code": "5335"
+}
+###
+
+# @name 获取验证码
+POST http://localhost:3000/v1/user/authCode
+Content-Type: application/json
+
+{
+  "email": "812262519@qq.com"
+}
+###

@@ -14,7 +14,8 @@ var userSet = access.UserSet
 type User struct {
 	ID         string `bson:"_id"`                          // 用户ID
 	Avatar     string `bson:"avatar" json:"avatar"`         // 用户头像
-	NickName   string `bson:"nickName" json:"nickName"`     // 用户昵称
+	Username   string `bson:"username" json:"username"`     // 用户名
+	Nickname   string `bson:"nickname" json:"nickname"`     // 用户昵称
 	Password   string `bson:"password" json:"password"`     // 用户密码, md5加密后的
 	Email      string `bson:"email" json:"email"`           // 用户邮箱
 	Phone      string `bson:"phone" json:"phone"`           // 用户手机号
