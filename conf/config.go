@@ -1,9 +1,10 @@
 package conf
 
 import (
-	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
+
+	"gopkg.in/yaml.v3"
 )
 
 // ---------------------------------------------
@@ -29,6 +30,13 @@ type MyConfig struct {
 		User string `yaml:"user"` // 用户名
 		Pass string `yaml:"pass"` // 密码
 	} `yaml:"email"` // email配置
+	JWT struct {
+		Secret     string   `yaml:"secret"`    // 密钥
+		ExpireTime int      `yaml:"ex"`        // 过期时间
+		WhiteList  []string `yaml:"whiteList"` // 白名单
+		Issuer     string   `yaml:"issuer"`
+		Subject    string   `yaml:"subject"`
+	} `yaml:"jwt"` // jwt 配置
 }
 
 // 读取配置并绑定结构体

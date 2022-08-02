@@ -13,7 +13,7 @@ var userSet = access.UserSet
 
 // User 用户
 type User struct {
-	// ID         string `bson:"_id"`                          // 用户ID
+	ID         string `bson:"_id"`                          // 用户ID
 	Avatar     string `bson:"avatar" json:"avatar"`         // 用户头像
 	Username   string `bson:"username" json:"username"`     // 用户名
 	Nickname   string `bson:"nickname" json:"nickname"`     // 用户昵称
@@ -42,12 +42,33 @@ func (u *User) FindUserByEmail() (*User, error) {
 }
 
 // FindUserByUsername 用username查询一个用户
-func (u *User) FindUserByUsername() (user *User, err error) {
-	err = userSet.FindOne(context.TODO(), bson.M{"username": u.Username}).Decode(user)
+func (u *User) FindUserByUsername() (*User, error) {
+	var user User
+	err := userSet.FindOne(context.TODO(), bson.M{"username": u.Username}).Decode(&user)
 	if err != nil {
 		return nil, err
 	}
-	return user, nil
+	return &user, nil
+}
+
+// LoginByUsername 使用用户名登录
+func (u *User) LoginByUsername() (*User, error) {
+	var user User
+	err := userSet.FindOne(context.TODO(), bson.M{"username": u.Username, "password": u.Password}).Decode(&user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+// LoginByEmail 使用邮箱登录
+func (u *User) LoginByEmail() (*User, error) {
+	var user User
+	err := userSet.FindOne(context.TODO(), bson.M{"email": u.Email, "password": u.Password}).Decode(&user)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
 
 // FindUserByName 用姓名查询一个用户

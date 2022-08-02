@@ -3,9 +3,10 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/nilorg/sdk/convert"
 	"math/rand"
 	"time"
+
+	"github.com/nilorg/sdk/convert"
 )
 
 // InterfaceToString 类型转换工具，去吧：字符串
