@@ -66,8 +66,11 @@ func Register(c *fiber.Ctx) error {
 	}
 	// 从 redis 中删除验证码
 	authCodeRedis.DelRedisKey()
+	token, _ := utils.GenerateToken(u.ID, u.Username, u.Email, u.Phone, u.Role, u.Status)
 
-	return c.Status(fiber.StatusOK).JSON(response.Ok("注册成功"))
+	return c.Status(fiber.StatusOK).JSON(response.OkWithData("注册成功", fiber.Map{
+		"token": token,
+	}))
 }
 
 func Login(c *fiber.Ctx) error {
