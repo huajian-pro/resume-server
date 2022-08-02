@@ -1,5 +1,8 @@
 # resume-server
 
+## 项目介绍
+本项目基于 [Golang](https://go.dev/) 语言 [Fiber](https://gofiber.io/) 框架，为开源项目[化简](https://huajian.smallpig.site/) 提供了服务端支持。
+
 ## 目录介绍
 
 ```text
@@ -20,6 +23,8 @@
 │   │   ├── mongo.go     # mongo数据库访问
 │   │   ├── mysql.go     # mysql数据库访问
 │   │   └── redis.go     # redis数据库访问
+│   ├── dao              # 数据库操作
+│   │   ├── ....go       # 数据库操作
 │   └── model            # 数据库模型
 │       └── ....go       # 数据模型及其操作
 ├── go.mod               # go模块文件

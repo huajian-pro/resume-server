@@ -21,7 +21,7 @@ type ResumeData struct {
 			TitleColor      string `json:"titleColor,omitempty"`
 			TitleFontSize   string `json:"titleFontSize,omitempty"`
 			TitleFontWeight int    `json:"titleFontWeight,omitempty"`
-		} `json:"style"`
+		} `json:"style"` // 模版样式
 		Name        string `json:"name,omitempty"`
 		Age         int    `json:"age,omitempty"`
 		Address     string `json:"address,omitempty"`
@@ -58,7 +58,7 @@ type ResumeData struct {
 			ProjectName       bool `json:"projectName,omitempty"`
 			AwardsName        bool `json:"awardsName,omitempty"`
 			AwardsGrade       bool `json:"awardsGrade,omitempty"`
-		} `json:"isShow,omitempty"`
+		} `json:"isShow,omitempty"` // 模版显示内容
 		IntendedPositions string `json:"intendedPositions,omitempty"`
 		IntendedCity      string `json:"intendedCity,omitempty"`
 		ExpectSalary      string `json:"expectSalary,omitempty"`
@@ -90,8 +90,8 @@ type ResumeData struct {
 			WorksName      string `json:"worksName,omitempty"`
 			WorksLink      string `json:"worksLink,omitempty"`
 			WorksIntroduce string `json:"worksIntroduce,omitempty"`
-		} `json:"LIST,omitempty"`
-		Content string `json:"content,omitempty"`
+		} `json:"LIST,omitempty"` // 模版内容
+		Content string `json:"content,omitempty"` // 模版内容
 	} `json:"LIST"` // 数据列表
 	GlobalStyle struct {
 		ThemeColor          string `json:"themeColor"`          // 主题颜色
@@ -102,7 +102,7 @@ type ResumeData struct {
 		TextFontColor       string `json:"textFontColor"`       // 文字颜色
 		SecondTitleWeight   int    `json:"secondTitleWeight"`   // 字体粗细
 		TextFontWeight      int    `json:"textFontWeight"`      // 文字字体粗细
-		ModelMarginTop      string `json:"modelMarginTop"`      // 	模块距离顶部距离
+		ModelMarginTop      string `json:"modelMarginTop"`      // 模块距离顶部距离
 		ModelMarginBottom   string `json:"modelMarginBottom"`   // 模块边距
 	} `json:"GLOBAL_STYLE"` // 全局样式
 }
