@@ -12,9 +12,10 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
-// 发送注册请求体 -> 判断用户名和邮箱是否存在 -> 校验验证码 -> 密码加密 -> 注册成功
+// 注册
 func Register(c *fiber.Ctx) error {
 	var req struct {
 		Username string `json:"username" validate:"required,min=4,max=18"` // 用户名
@@ -57,6 +58,7 @@ func Register(c *fiber.Ctx) error {
 	u.Role = 0
 	u.CreateTime = time.Now().Unix()
 	u.UpdateTime = time.Now().Unix()
+	u.ID = bson.NewObjectId().Hex()
 	_, err := u.CreateUser()
 	if err != nil {
 		fmt.Println(err)
@@ -68,7 +70,52 @@ func Register(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(response.Ok("注册成功"))
 }
 
-// 填写邮箱 -> 点击获取验证码 -> 后端获取邮箱 -> 随机生成验证码存入redis(有效期5分钟) -> 发送验证码到邮箱
+func Login(c *fiber.Ctx) error {
+	var req struct {
+		Email    string `json:"email"`
+		Username string `json:"username"`
+		Password string `json:"password" validate:"required"`
+	}
+
+	if err := c.BodyParser(&req); err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(response.Fail(err.Error()))
+	}
+
+	if err := utils.ValidateParams(&req); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(response.FailWithData("参数错误", err))
+	}
+
+	if req.Email == "" && req.Username == "" {
+		return c.JSON(response.Fail("账号不能为空"))
+	}
+
+	var u model.User
+	var token string
+	u.Password = utils.MD5V([]byte(req.Password))
+	if req.Username != "" {
+		u.Username = req.Username
+		if user, err := u.LoginByUsername(); errors.Is(err, mongo.ErrNoDocuments) {
+			return c.JSON(response.Fail("用户名或密码错误"))
+		} else {
+			token, _ = utils.GenerateToken(user.ID, user.Username, user.Email, user.Phone, user.Role, user.Status)
+		}
+	}
+
+	if req.Email != "" {
+		u.Email = req.Email
+		if user, err := u.LoginByEmail(); errors.Is(err, mongo.ErrNoDocuments) {
+			return c.JSON(response.Fail("邮箱或密码错误"))
+		} else {
+			token, _ = utils.GenerateToken(user.ID, user.Username, user.Email, user.Phone, user.Role, user.Status)
+		}
+	}
+
+	return c.Status(fiber.StatusOK).JSON(response.OkWithData("登录成功", fiber.Map{
+		"token": token,
+	}))
+}
+
+// 发送验证码
 func SendCode(c *fiber.Ctx) error {
 	var req struct {
 		Email string `json:"email" validate:"required,email"`

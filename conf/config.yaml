@@ -21,3 +21,11 @@ email:
   port: "25"
   user: ""
   pass: ""
+
+# jwt 配置
+jwt:
+  secret: "xxxxxx"
+  ex: 8
+  issuer: "xxx"
+  subject: "xxx"
+  whiteList: ["/", "/v1/user/login", "/v1/user/reigster", "/v1/user/authCode"]

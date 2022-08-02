@@ -1,6 +1,7 @@
 # @name GET请求
-GET http://localhost:3000/api/v1/hello
+GET http://localhost:3000/v1/user/hello
 Accept: application/json
+Authorization: 123
 ###
 
 # @name GET请求
@@ -8,11 +9,14 @@ GET http://localhost:3000/?name=jack&pass=啥密码
 Accept: application/json
 ###
 
-# @name POST请求
-POST http://localhost:3000/
+# @name 登录
+POST http://localhost:3000/v1/user/login
 Content-Type: application/json
 
-{}
+{
+  "username": "lewin",
+  "password": "123456"
+}
 ###
 
 # @name 用户注册
@@ -23,7 +27,7 @@ Content-Type: application/json
   "username": "lewin",
   "email": "lewinloo0320@gmail.com",
   "password": "123456",
-  "code": "505996"
+  "code": "050412"
 }
 ###
 
