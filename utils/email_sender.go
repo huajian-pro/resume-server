@@ -2,11 +2,10 @@ package utils
 
 import (
 	"fmt"
+	"github.com/jordan-wright/email"
 	"net/smtp"
 	"resume-server/conf"
 	"sync"
-
-	"github.com/jordan-wright/email"
 )
 
 // 邮件发送者数据结构
