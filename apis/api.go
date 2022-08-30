@@ -2,6 +2,7 @@ package apis
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"resume-server/apis/resumeApi"
 	"resume-server/apis/userApi"
 )
 
@@ -20,8 +21,8 @@ func Api(app *fiber.App) {
 	// 简历模块
 	resume := v1.Group("resume")
 	// resume.Use() // 公共路由的中间件
-	resume.Get("/temp", userApi.SayHello) // 全部模版，访问：/v1/resume/hello
-	resume.Get("/hi", userApi.SayHi)
+	resume.Get("/find", resumeApi.FindResumeByUser) // 全部模版，访问：/v1/resume/hello
+	resume.Post("/save", resumeApi.SaveResumeData)
 }
 
 // todo List

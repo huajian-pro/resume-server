@@ -10,8 +10,8 @@ import (
 
 // mongo 集合句柄（支持多个句柄）
 var (
-	UserSet *mongo.Collection // 模版数据集合
-	TempSet *mongo.Collection // 用户集合
+	UserSet    *mongo.Collection // 模版数据集合
+	ResumeData *mongo.Collection // 用户集合
 )
 
 // mongo 的连接信息
@@ -25,8 +25,8 @@ var (
 func init() {
 	mgoDB := connectToDB(fmt.Sprintf("mongodb://%v:%v", Addr, Port), Base) // 第二个参数是库名
 	// mongo 集合句柄
-	UserSet = mgoDB.Collection("User")    // 给句柄赋值，name为集合名
-	TempSet = mgoDB.Collection("TempSet") // 模版数据
+	UserSet = mgoDB.Collection("User")       // 给句柄赋值，name为集合名
+	ResumeData = mgoDB.Collection("TempSet") // 用户的简历内容
 }
 
 // 链接mongo连接池

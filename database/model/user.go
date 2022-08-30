@@ -5,6 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"resume-server/database/access"
+	"time"
 )
 
 // 引入数据库操作接口
@@ -12,16 +13,15 @@ var userSet = access.UserSet
 
 // User 用户
 type User struct {
-	ID         string `bson:"_id" json:"userID"`            // 用户ID
-	Avatar     string `bson:"avatar" json:"avatar"`         // 用户头像
-	NickName   string `bson:"nickName" json:"nickName"`     // 用户昵称
-	Password   string `bson:"password" json:"password"`     // 用户密码, md5加密后的
-	Email      string `bson:"email" json:"email"`           // 用户邮箱
-	Phone      string `bson:"phone" json:"phone"`           // 用户手机号
-	Status     int    `bson:"status" json:"status"`         // 用户状态: 0-启用 1-禁用
-	Role       int    `bson:"role" json:"role"`             // 用户角色：0-普通用户，1-VIP，9-管理员
-	CreateTime int64  `bson:"createTime" json:"createTime"` // 创建时间
-	UpdateTime int64  `bson:"updateTime" json:"updateTime"` // 更新时间
+	Avatar     string    `bson:"avatar" json:"avatar"`         // 用户头像
+	NickName   string    `bson:"nickName" json:"nickName"`     // 用户昵称
+	Password   string    `bson:"password" json:"password"`     // 用户密码, md5加密后的
+	Email      string    `bson:"email" json:"email"`           // 用户邮箱
+	Phone      string    `bson:"phone" json:"phone"`           // 用户手机号
+	Status     int       `bson:"status" json:"status"`         // 用户状态: 0-启用 1-禁用
+	Role       int       `bson:"role" json:"role"`             // 用户角色：0-普通用户，1-VIP，9-管理员
+	CreateTime time.Time `bson:"createTime" json:"createTime"` // 创建时间
+	UpdateTime time.Time `bson:"updateTime" json:"updateTime"` // 更新时间
 }
 
 // CreateUser 创建一个用户
