@@ -1,13 +1,12 @@
-package utils
+package jwt
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"resume-server/conf"
 	"time"
-
-	"github.com/dgrijalva/jwt-go"
 )
 
-var JwtSecret = []byte(conf.Cfg.JWT.Secret)
+var TokenSecret = []byte(conf.Cfg.JWT.Secret)
 
 type Claims struct {
 	Userid   string `json:"userid"`
@@ -36,14 +35,14 @@ func GenerateToken(userid, username, email, phone string, role, status int) (str
 		},
 	}
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	token, err := tokenClaims.SignedString(JwtSecret)
+	token, err := tokenClaims.SignedString(TokenSecret)
 	return token, err
 }
 
 // ParseToken 解析token
 func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(t *jwt.Token) (interface{}, error) {
-		return JwtSecret, nil
+		return TokenSecret, nil
 	})
 	if tokenClaims != nil {
 		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {

@@ -15,7 +15,7 @@ var resumeSet = access.ResumeData
 // ResumeData 简历数据
 type ResumeData struct {
 	Belong      string         `bson:"belong" json:"belong"`            // 简历所属用户ID
-	TmpID       string         `bson:"tmpID" json:"tmpID"`              // 简历模版ID
+	TmpID       string         `bson:"tmpID" json:"ID"`                 // 简历模版ID
 	Name        string         `bson:"name" json:"NAME"`                // 简历模版名称
 	Title       string         `bson:"title" json:"TITLE"`              // 简历模版标题
 	Layout      string         `bson:"layout" json:"LAYOUT"`            // 简历模版布局
@@ -26,12 +26,16 @@ type ResumeData struct {
 }
 
 // FindResumeByID 根据ID查询一条数据
-func (r *ResumeData) FindResumeByID(id string) (*ResumeData, error) {
-	err := resumeSet.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&r)
+func (r *ResumeData) FindResumeByID() (*ResumeData, error) {
+	var resume ResumeData
+	err := resumeSet.FindOne(
+		context.TODO(),
+		bson.M{"tmpID": r.TmpID, "belong": r.Belong},
+	).Decode(&resume)
 	if err != nil {
 		return nil, err
 	}
-	return r, nil
+	return &resume, nil
 }
 
 // FindResumeByName 根据名称查询一条数据
@@ -71,4 +75,13 @@ func (r *ResumeData) FindAllResumeByBelong(belong string) ([]ResumeData, error) 
 // InsertResume 插入一条数据
 func (r *ResumeData) InsertResume() (*mongo.InsertOneResult, error) {
 	return resumeSet.InsertOne(context.TODO(), r)
+}
+
+// UpdateResume 更新一条数据
+func (r *ResumeData) UpdateResume() (*mongo.UpdateResult, error) {
+	return resumeSet.UpdateOne(
+		context.TODO(),
+		bson.M{"tmpID": r.TmpID, "belong": r.Belong},
+		bson.M{"$set": r},
+	)
 }

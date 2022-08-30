@@ -41,3 +41,21 @@ func Int64ToTime(timestamp int64) string {
 	tm := time.Unix(timestamp, 0)
 	return tm.Format("2006-01-02 15:04:05")
 }
+
+// RandLow 随机字符串，包含 1~9, a~z 和 A～Z
+func RandLow(n int) string {
+	longLetters := []byte("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	if n <= 0 {
+		return ""
+	}
+	b := make([]byte, n)
+	arc := uint8(0)
+	if _, err := rand.Read(b[:]); err != nil {
+		return ""
+	}
+	for i, x := range b {
+		arc = x & 31
+		b[i] = longLetters[arc]
+	}
+	return string(b)
+}

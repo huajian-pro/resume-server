@@ -6,7 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"resume-server/database/model"
 	"resume-server/utils"
-	"resume-server/utils/response"
+	"resume-server/utils/jwt"
+	"resume-server/utils/resp"
 )
 
 // Login 登录
@@ -16,17 +17,16 @@ func Login(c *fiber.Ctx) error {
 		Username string `json:"username"`
 		Password string `json:"password" validate:"required"`
 	}{}
-
+	// 获取并绑定请求参数
 	if err := c.BodyParser(&req); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(response.Fail(err.Error()))
+		return c.JSON(resp.With(resp.ErrServer, err))
 	}
-
 	if err := utils.ValidateParams(&req); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(response.FailWithData("参数错误", err))
+		return c.JSON(resp.With(resp.ErrParam, err))
 	}
 	// 邮箱和用户名不能同时为空
 	if req.Email == "" && req.Username == "" {
-		return c.JSON(response.Fail("账号不能为空"))
+		return c.JSON(resp.With(resp.LoginFail, nil))
 	}
 
 	var u model.User
@@ -35,22 +35,22 @@ func Login(c *fiber.Ctx) error {
 	if req.Username != "" {
 		u.Username = req.Username // 通过唯一用户名找到用户
 		if user, err := u.LoginByUsername(); errors.Is(err, mongo.ErrNoDocuments) {
-			return c.JSON(response.Fail("用户名或密码错误"))
+			return c.JSON(resp.With(resp.LoginUserNameErr, nil))
 		} else {
-			token, _ = utils.GenerateToken(user.ID, user.Username, user.Email, user.Phone, user.Role, user.Status)
+			token, _ = jwt.GenerateToken(user.ID, user.Username, user.Email, user.Phone, user.Role, user.Status)
 		}
 	}
 
 	if req.Email != "" {
 		u.Email = req.Email // 通过唯一用户邮箱找到用户
 		if user, err := u.LoginByEmail(); errors.Is(err, mongo.ErrNoDocuments) {
-			return c.JSON(response.Fail("邮箱或密码错误"))
+			return c.JSON(resp.With(resp.LoginUserEmailErr, nil))
 		} else {
-			token, _ = utils.GenerateToken(user.ID, user.Username, user.Email, user.Phone, user.Role, user.Status)
+			token, _ = jwt.GenerateToken(user.ID, user.Username, user.Email, user.Phone, user.Role, user.Status)
 		}
 	}
 
-	return c.Status(fiber.StatusOK).JSON(response.OkWithData("登录成功", fiber.Map{
+	return c.JSON(resp.With(resp.EthIsOK, fiber.Map{
 		"token": token,
 	}))
 }

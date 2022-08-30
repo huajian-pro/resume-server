@@ -3,7 +3,8 @@ package middle
 import (
 	"github.com/gofiber/fiber/v2"
 	"resume-server/conf"
-	"resume-server/utils"
+	"resume-server/utils/jwt"
+	"resume-server/utils/resp"
 	"time"
 )
 
@@ -16,24 +17,13 @@ func CheckAuth() fiber.Handler {
 			}
 		}
 
-		code := 200
-		var message string
 		headers := c.GetReqHeaders()
 		token := headers["Authorization"]
-		claims, err := utils.ParseToken(token)
+		claims, err := jwt.ParseToken(token)
 		if token == "" || err != nil {
-			code = 400
-			message = "用户认证失败"
+			return c.JSON(resp.With(resp.AuthFail, nil))
 		} else if time.Now().Unix() > claims.ExpiresAt {
-			code = 401
-			message = "用户认证信息过期"
-		}
-		if code != 200 {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"code":    code,
-				"message": message,
-				"success": false,
-			})
+			return c.JSON(resp.With(resp.AuthExpired, nil))
 		}
 
 		// 传递到下个中间件或处理函数
