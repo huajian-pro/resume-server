@@ -17,12 +17,10 @@ type emailSender struct {
 }
 
 // 新建一个邮件发送者
-func newEmailSender(from, subject, sendBody string) *emailSender {
+func newEmailSender(from string) *emailSender {
 	return &emailSender{
-		Mail:     email.NewEmail(), // 创建一个邮件对象
-		From:     from,             // 发件人
-		Subject:  subject,          // 主题
-		SendBody: sendBody,         // 文本内容
+		Mail: email.NewEmail(), // 创建一个邮件对象
+		From: from,             // 发件人
 	}
 }
 
@@ -31,15 +29,22 @@ var sender *emailSender        // 单例句柄
 var emailConf = conf.Cfg.Email // email 配置
 
 // Email 获取单例句柄
-func Email(subject, sendBody string) *emailSender {
+func Email() *emailSender {
 	once.Do(func() {
-		sender = newEmailSender("化简 <"+emailConf.User+">", subject, sendBody)
+		sender = newEmailSender("化简 <" + emailConf.User + ">")
 	})
 	return sender
 }
 
-// Send 发送邮件
-func (sender *emailSender) Send(toSomebody []string) (ok bool) {
+// Send 发送
+func (sender *emailSender) Send(subject, sendBody string) *emailSender {
+	sender.Subject = subject   // 主题
+	sender.SendBody = sendBody // 文本内容
+	return sender
+}
+
+// To 发送邮件
+func (sender *emailSender) To(toSomebody []string) (ok bool) {
 	sender.Mail.From = sender.From             // 发件人
 	sender.Mail.To = toSomebody                // 收件人
 	sender.Mail.Subject = sender.Subject       // 主题
@@ -48,11 +53,5 @@ func (sender *emailSender) Send(toSomebody []string) (ok bool) {
 		fmt.Sprintf("%s:%s", emailConf.Host, emailConf.Port), // 邮件服务器地址
 		smtp.PlainAuth("", emailConf.User, emailConf.Pass, emailConf.Host),
 	)
-	if err != nil {
-		return false // 发送失败
-	}
-	return true // 发送成功
+	return err == nil
 }
-
-// 发送注册验证码邮件
-// 发送重置验证码邮件
