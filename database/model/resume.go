@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"resume-server/database/access"
+	"time"
 )
 
 // 引入数据库操作接口
@@ -74,11 +75,14 @@ func (r *ResumeData) FindAllResumeByBelong(belong string) ([]ResumeData, error) 
 
 // InsertResume 插入一条数据
 func (r *ResumeData) InsertResume() (*mongo.InsertOneResult, error) {
+	r.CreateTime = time.Now().Unix()
+	r.UpdateTime = time.Now().Unix()
 	return resumeSet.InsertOne(context.TODO(), r)
 }
 
 // UpdateResume 更新一条数据
 func (r *ResumeData) UpdateResume() (*mongo.UpdateResult, error) {
+	r.UpdateTime = time.Now().Unix()
 	return resumeSet.UpdateOne(
 		context.TODO(),
 		bson.M{"tmpID": r.TmpID, "belong": r.Belong},
