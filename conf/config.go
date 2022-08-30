@@ -1,9 +1,10 @@
 package conf
 
 import (
-	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
+
+	"gopkg.in/yaml.v3"
 )
 
 // ---------------------------------------------
@@ -23,6 +24,19 @@ type MyConfig struct {
 		Port string `yaml:"port"` // 端口
 		Base string `yaml:"base"` // 库名
 	} `yaml:"mongo"` // mongo配置
+	Email struct {
+		Host string `yaml:"host"` // 主机
+		Port string `yaml:"port"` // 端口
+		User string `yaml:"user"` // 用户名
+		Pass string `yaml:"pass"` // 密码
+	} `yaml:"email"` // email配置
+	JWT struct {
+		Secret     string   `yaml:"secret"`    // 密钥
+		ExpireTime int      `yaml:"ex"`        // 过期时间
+		WhiteList  []string `yaml:"whiteList"` // 白名单
+		Issuer     string   `yaml:"issuer"`
+		Subject    string   `yaml:"subject"`
+	} `yaml:"jwt"` // jwt 配置
 }
 
 // 读取配置并绑定结构体
@@ -34,7 +48,7 @@ func (m *MyConfig) getMyConfig() *MyConfig {
 		yamlFile, err = ioutil.ReadFile("conf/prod.yaml")
 	} else {
 		// 读取开发环境的 yaml 配置文件到缓存
-		yamlFile, err = ioutil.ReadFile("conf/config.yaml")
+		yamlFile, err = ioutil.ReadFile("conf/deve.yaml")
 	}
 
 	// 如果读取失败，则报错并退出

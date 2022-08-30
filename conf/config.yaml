@@ -6,13 +6,26 @@ port: ":3000"
 
 # redis配置
 redis:
-  addr: "redis"
+  addr: "localhost"
   port: "6379"
   auth: "redis12345"
 
 # mongo配置
 mongo:
-  addr: "mongo"
+  addr: "localhost"
   port: "27017"
   base: "resume"
 
+email:
+  host: "smtp.163.com"
+  port: "25"
+  user: ""
+  pass: ""
+
+# jwt 配置
+jwt:
+  secret: "xxxxxx" # jwt加密密钥
+  ex: 8            # jwt过期时间，单位为小时
+  issuer: "xxx"
+  subject: "xxx"
+  whiteList: ["/", "/v1/user/login", "/v1/user/register", "/v1/user/authCode"]

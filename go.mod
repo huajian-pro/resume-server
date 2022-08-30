@@ -3,6 +3,7 @@ module resume-server
 go 1.18
 
 require (
+	github.com/go-playground/validator/v10 v10.11.0
 	github.com/gofiber/fiber/v2 v2.35.0
 	github.com/gomodule/redigo v1.8.9
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
@@ -12,10 +13,16 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 )
 
+require gopkg.in/yaml.v2 v2.4.0 // indirect
+
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/go-playground/locales v0.14.0 // indirect
+	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/klauspost/compress v1.15.9 // indirect
+	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/montanaflynn/stats v0.0.0-20171201202039-1bf9dbcd8cbe // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
@@ -31,4 +38,5 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
 )
