@@ -1,11 +1,10 @@
-package middleware
+package middle
 
 import (
+	"github.com/gofiber/fiber/v2"
 	"resume-server/conf"
 	"resume-server/utils"
 	"time"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 func CheckAuth() fiber.Handler {
@@ -17,7 +16,7 @@ func CheckAuth() fiber.Handler {
 			}
 		}
 
-		var code int = 200
+		code := 200
 		var message string
 		headers := c.GetReqHeaders()
 		token := headers["Authorization"]
@@ -29,7 +28,6 @@ func CheckAuth() fiber.Handler {
 			code = 401
 			message = "用户认证信息过期"
 		}
-
 		if code != 200 {
 			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 				"code":    code,
@@ -38,6 +36,11 @@ func CheckAuth() fiber.Handler {
 			})
 		}
 
+		// 传递到下个中间件或处理函数
+		c.Locals("Userid", claims.Userid)     // 设置用户id
+		c.Locals("Username", claims.Username) // 设置用户名
+		c.Locals("Email", claims.Email)       // 设置邮箱
+		c.Locals("Role", claims.Role)         // 设置角色
 		return c.Next()
 	}
 }

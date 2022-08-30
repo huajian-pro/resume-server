@@ -24,8 +24,8 @@ email:
 
 # jwt 配置
 jwt:
-  secret: "xxxxxx"
-  ex: 8
+  secret: "xxxxxx" # jwt加密密钥
+  ex: 8            # jwt过期时间，单位为小时
   issuer: "xxx"
   subject: "xxx"
   whiteList: ["/", "/v1/user/login", "/v1/user/register", "/v1/user/authCode"]

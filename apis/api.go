@@ -2,30 +2,27 @@ package apis
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"resume-server/apis/middle"
 	"resume-server/apis/resumeApi"
-	"resume-server/apis/middleware"
+	"resume-server/apis/userApi"
 )
 
 // Api 设置路由
 // 代码便是文档，命名就是路由
 func Api(app *fiber.App) {
-	v1 := app.Group("v1")                         // v1 路由组，使用该路由组时，前面需加上 /v1
-	v1.Use(recover.New(), middleware.CheckAuth()) // 基础的中间件
+	v1 := app.Group("v1") // v1 路由组，使用该路由组时，前面需加上 /v1
+	// v1.Use(recover.New(), middleware.CheckAuth()) // 基础的中间件
 
 	// 用户模块
 	user := v1.Group("user")
-	// user.Use() // 公共路由的中间件
-	user.Get("/hello", userApi.SayHello) // 访问：/v1/user/hello
-	user.Get("/hi", userApi.SayHi)
-	user.Post("/register", userApi.Register) // 注册 api
-	user.Post("/authCode", userApi.SendCode) // 验证码 api
-	user.Post("/login", userApi.Login)       // 登录api
+	user.Post("/register", userApi.Register)               // 注册 api，访问：/v1/user/register
+	user.Post("/authCode", userApi.SendCode)               // 验证码 api，访问：/v1/user/authCode
+	user.Post("/login", middle.CheckAuth(), userApi.Login) // 登录api，访问：/v1/user/login
 
 	// 简历模块
-	resume := v1.Group("resume")
-	// resume.Use() // 公共路由的中间件
-	resume.Get("/find", resumeApi.FindResumeByUser) // 全部模版，访问：/v1/resume/hello
-	resume.Post("/save", resumeApi.SaveResumeData)
+	resume := v1.Group("resume", middle.CheckAuth()) // 使用中间件验证用户是否登录
+	resume.Get("/find", resumeApi.FindResumeByUser)  // 查询简历，访问：/v1/resume/find
+	resume.Post("/save", resumeApi.SaveResumeData)   // 保存简历，访问：/v1/resume/save
 }
 
 // todo List

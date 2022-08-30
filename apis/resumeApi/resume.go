@@ -7,17 +7,18 @@ import (
 )
 
 // FindResumeByUser 查询用户的简历
-// GET /v1/resume/find?userid=""
+// GET /v1/resume/find?tmpID="1"
 func FindResumeByUser(c *fiber.Ctx) error {
-	// 获取请求参数
-	userid := c.Query("userid")
+	// 从中间件中取出用户id
+	userID := c.Locals("Userid").(string)
+	fmt.Println("userID:", userID)
 	// 查询数据
 	var resume model.ResumeData
-	resumeList, err := resume.FindAllResumeByBelong(userid)
+	resumeList, err := resume.FindAllResumeByBelong(userID)
 	if err != nil {
-		return c.SendStatus(500)
+		return c.Status(200).JSON(err)
 	}
-	return c.JSON(resumeList)
+	return c.JSON(fiber.Map{"resumeList": resumeList})
 }
 
 // SaveResumeData 保存

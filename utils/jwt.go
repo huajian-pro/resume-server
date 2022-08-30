@@ -10,7 +10,7 @@ import (
 var JwtSecret = []byte(conf.Cfg.JWT.Secret)
 
 type Claims struct {
-	Id       string `json:"id"`
+	Userid   string `json:"userid"`
 	Username string `json:"username"`
 	Email    string `json:"email"`
 	Role     int    `json:"role"`
@@ -19,11 +19,11 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-// 生成token
-func GenerateToken(id, username, email, phone string, role, status int) (string, error) {
+// GenerateToken 生成token
+func GenerateToken(userid, username, email, phone string, role, status int) (string, error) {
 	expireTime := time.Now().Add(time.Duration(conf.Cfg.JWT.ExpireTime) * time.Hour)
 	claims := Claims{
-		Id:       id,
+		Userid:   userid,
 		Username: username,
 		Email:    email,
 		Role:     role,
@@ -40,7 +40,7 @@ func GenerateToken(id, username, email, phone string, role, status int) (string,
 	return token, err
 }
 
-// 解析token
+// ParseToken 解析token
 func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(t *jwt.Token) (interface{}, error) {
 		return JwtSecret, nil

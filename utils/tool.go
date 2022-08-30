@@ -35,3 +35,9 @@ func GetRandomCode() string {
 	code := fmt.Sprintf("%06v", rnd.Int31n(1000000))
 	return code
 }
+
+// Int64ToTime 将int64类型时间戳转换为时间格式
+func Int64ToTime(timestamp int64) string {
+	tm := time.Unix(timestamp, 0)
+	return tm.Format("2006-01-02 15:04:05")
+}
