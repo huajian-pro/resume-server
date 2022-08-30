@@ -28,4 +28,4 @@ jwt:
   ex: 8
   issuer: "xxx"
   subject: "xxx"
-  whiteList: ["/", "/v1/user/login", "/v1/user/reigster", "/v1/user/authCode"]
+  whiteList: ["/", "/v1/user/login", "/v1/user/register", "/v1/user/authCode"]
