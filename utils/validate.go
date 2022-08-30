@@ -10,6 +10,7 @@ type ErrorResponse struct {
 
 var validate = validator.New()
 
+// ValidateParams 验证参数
 func ValidateParams(params any) []*ErrorResponse {
 	var errors []*ErrorResponse
 	err := validate.Struct(params)
